@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DSharpPlus" Version="4.2.0-nightly-01011" />
+    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.2.0-nightly-01011" />
+    <PackageReference Include="DSharpPlus.Interactivity" Version="4.2.0-nightly-01011" />
+    <PackageReference Include="DSharpPlus.SlashCommands" Version="4.2.0-nightly-01011" />
+    <PackageReference Include="DSharpPlus.VoiceNext" Version="4.2.0-nightly-01011" />
+    <PackageReference Include="JetBrains.Annotations" Version="2021.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
+    <PackageReference Include="OpenTracing" Version="0.12.1" />
+    <PackageReference Include="OpenTracing.Contrib.NetCore" Version="0.7.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Attributes\" />
+    <Folder Include="Extensions\CommandsNext\" />
+    <Folder Include="Extensions\Interactivity\" />
+    <Folder Include="Extensions\VoiceNext\" />
+    <Folder Include="Extensions\SlashCommands\" />
+  </ItemGroup>
+
+</Project>
