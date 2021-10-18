@@ -1,5 +1,6 @@
 ﻿// MIT License
 //
+// Copyright (c) 2021 Benjamin Höglinger-Stelzer
 // Copyright (c) 2021 Krzysztof Kupisz - MikyM
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
