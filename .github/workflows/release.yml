@@ -23,8 +23,6 @@ jobs:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
     - name: Check out Code 
       uses: actions/checkout@v2
-    - name: Add DSharpPlus nightly feed
-      run: dotnet nuget add source https://nuget.emzi0767.com/api/v3/index.json -n dsharp
     - name: Restore dependencies
       run: dotnet restore
     - name: Build solution and generate NuGet package
