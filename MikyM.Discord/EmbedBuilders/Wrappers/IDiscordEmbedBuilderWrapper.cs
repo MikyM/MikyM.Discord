@@ -160,4 +160,11 @@ public interface IDiscordEmbedBuilderWrapper
     /// </summary>
     /// <returns>This embed builder wrapper.</returns>
     IDiscordEmbedBuilderWrapper WithTitle(string title);
+    
+    /// <summary>
+    /// Adds an invisible field, inline defaults to true
+    /// </summary>
+    /// <param name="inline">Whether added field should have inline set</param>
+    /// <returns>This embed builder wrapper.</returns>
+    IDiscordEmbedBuilderWrapper AddInvisibleField(bool inline = true);
 }

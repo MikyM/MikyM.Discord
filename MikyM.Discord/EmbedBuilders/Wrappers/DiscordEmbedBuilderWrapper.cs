@@ -56,111 +56,136 @@ public class DiscordEmbedBuilderWrapper : IDiscordEmbedBuilderWrapper
     /// <returns>The instance of the currently wrapped builder.</returns>
     internal DiscordEmbedBuilder GetBaseInternal() => Wrapped;
 
+    /// <inheritdoc />
     public IDiscordEmbedBuilderWrapper WithDescription(string description)
     {
         Wrapped.WithDescription(description);
         return this;
     }
 
+    /// <inheritdoc />
     public IDiscordEmbedBuilderWrapper WithUrl(string url)
     {
         Wrapped.WithUrl(url);
         return this;
     }
 
+    /// <inheritdoc />
     public IDiscordEmbedBuilderWrapper WithUrl(Uri url)
     {
         Wrapped.WithUrl(url);
         return this;
     }
 
+    /// <inheritdoc />
     public IDiscordEmbedBuilderWrapper WithColor(DiscordColor color)
     {
         Wrapped.WithColor(color);
         return this;
     }
 
+    /// <inheritdoc />
     public IDiscordEmbedBuilderWrapper WithTimestamp(DateTimeOffset? timestamp)
     {
         Wrapped.WithTimestamp(timestamp);
         return this;
     }
 
+    /// <inheritdoc />
     public IDiscordEmbedBuilderWrapper WithTimestamp(DateTime? timestamp)
     {
         Wrapped.WithTimestamp(timestamp);
         return this;
     }
 
+    /// <inheritdoc />
     public IDiscordEmbedBuilderWrapper WithTimestamp(ulong snowflake)
     {
         Wrapped.WithTimestamp(snowflake);
         return this;
     }
 
+    /// <inheritdoc />
     public IDiscordEmbedBuilderWrapper WithImageUrl(string url)
     {
         Wrapped.WithImageUrl(url);
         return this;
     }
 
+    /// <inheritdoc />
     public IDiscordEmbedBuilderWrapper WithImageUrl(Uri url)
     {
         Wrapped.WithImageUrl(url);
         return this;
     }
 
+    /// <inheritdoc />
     public IDiscordEmbedBuilderWrapper WithThumbnail(string url, int height = 0, int width = 0)
     {
         Wrapped.WithThumbnail(url, height, width);
         return this;
     }
 
+    /// <inheritdoc />
     public IDiscordEmbedBuilderWrapper WithThumbnail(Uri url, int height = 0, int width = 0)
     {
         Wrapped.WithThumbnail(url, height, width);
         return this;
     }
 
+    /// <inheritdoc />
     public IDiscordEmbedBuilderWrapper WithAuthor(string? name = null, string? url = null, string? iconUrl = null)
     {
         Wrapped.WithAuthor(name, url, iconUrl);
         return this;
     }
 
+    /// <inheritdoc />
     public IDiscordEmbedBuilderWrapper WithFooter(string? text = null, string? iconUrl = null)
     {
         Wrapped.WithFooter(text, iconUrl);
         return this;
     }
 
+    /// <inheritdoc />
     public IDiscordEmbedBuilderWrapper AddField(string name, string value, bool inline = false)
     {
         Wrapped.AddField(name, value, inline);
         return this;
     }
 
+    /// <inheritdoc />
     public IDiscordEmbedBuilderWrapper RemoveFieldAt(int index)
     {
         Wrapped.RemoveFieldAt(index);
         return this;
     }
 
+    /// <inheritdoc />
     public IDiscordEmbedBuilderWrapper RemoveFieldRange(int index, int count)
     {
         Wrapped.RemoveFieldRange(index, count);
         return this;
     }
 
+    /// <inheritdoc />
     public IDiscordEmbedBuilderWrapper ClearFields()
     {
         Wrapped.ClearFields();
         return this;
     }
 
+    /// <inheritdoc />
     public IDiscordEmbedBuilderWrapper WithTitle(string title)
     {
         Wrapped.WithTitle(title);
+        return this;
+    }
+
+    /// <inheritdoc />
+    public IDiscordEmbedBuilderWrapper AddInvisibleField(bool inline = true)
+    {
+        Wrapped.AddField("\u200b", "\u200b", inline);
         return this;
     }
 }
