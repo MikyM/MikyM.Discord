@@ -17,8 +17,8 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-using DSharpPlus.Entities;
 using System;
+using DSharpPlus.Entities;
 
 namespace MikyM.Discord.EmbedBuilders.Wrappers;
 
@@ -31,14 +31,14 @@ public class DiscordEmbedBuilderWrapper : IDiscordEmbedBuilderWrapper
     /// Constructs a new <see cref="DiscordEmbedBuilderWrapper"/> with a new, clean <see cref="DiscordEmbedBuilder"/> instance inside.
     /// </summary>
     public DiscordEmbedBuilderWrapper()
-        => this.Wrapped = new DiscordEmbedBuilder();
+        => Wrapped = new DiscordEmbedBuilder();
 
     /// <summary>
     /// Constructs a new <see cref="DiscordEmbedBuilderWrapper"/> based on a given <see cref="DiscordEmbedBuilder"/> instance.
     /// </summary>
     /// <param name="wrapped">Builder to wrap.</param>
     public DiscordEmbedBuilderWrapper(DiscordEmbedBuilder wrapped)
-        => this.Wrapped = new DiscordEmbedBuilder(wrapped ?? throw new ArgumentNullException(nameof(wrapped)));
+        => Wrapped = new DiscordEmbedBuilder(wrapped ?? throw new ArgumentNullException(nameof(wrapped)));
 
     /// <summary>
     /// Gets the current embed builder.
@@ -48,119 +48,119 @@ public class DiscordEmbedBuilderWrapper : IDiscordEmbedBuilderWrapper
     /// <summary>
     /// Builds the embed.
     /// </summary>
-    protected internal DiscordEmbed Build() => this.Wrapped.Build();
+    protected internal DiscordEmbed Build() => Wrapped.Build();
 
     /// <summary>
     /// Extracts the builder.
     /// </summary>
     /// <returns>The instance of the currently wrapped builder.</returns>
-    internal DiscordEmbedBuilder GetBaseInternal() => this.Wrapped;
+    internal DiscordEmbedBuilder GetBaseInternal() => Wrapped;
 
     public IDiscordEmbedBuilderWrapper WithDescription(string description)
     {
-        this.Wrapped.WithDescription(description);
+        Wrapped.WithDescription(description);
         return this;
     }
 
     public IDiscordEmbedBuilderWrapper WithUrl(string url)
     {
-        this.Wrapped.WithUrl(url);
+        Wrapped.WithUrl(url);
         return this;
     }
 
     public IDiscordEmbedBuilderWrapper WithUrl(Uri url)
     {
-        this.Wrapped.WithUrl(url);
+        Wrapped.WithUrl(url);
         return this;
     }
 
     public IDiscordEmbedBuilderWrapper WithColor(DiscordColor color)
     {
-        this.Wrapped.WithColor(color);
+        Wrapped.WithColor(color);
         return this;
     }
 
     public IDiscordEmbedBuilderWrapper WithTimestamp(DateTimeOffset? timestamp)
     {
-        this.Wrapped.WithTimestamp(timestamp);
+        Wrapped.WithTimestamp(timestamp);
         return this;
     }
 
     public IDiscordEmbedBuilderWrapper WithTimestamp(DateTime? timestamp)
     {
-        this.Wrapped.WithTimestamp(timestamp);
+        Wrapped.WithTimestamp(timestamp);
         return this;
     }
 
     public IDiscordEmbedBuilderWrapper WithTimestamp(ulong snowflake)
     {
-        this.Wrapped.WithTimestamp(snowflake);
+        Wrapped.WithTimestamp(snowflake);
         return this;
     }
 
     public IDiscordEmbedBuilderWrapper WithImageUrl(string url)
     {
-        this.Wrapped.WithImageUrl(url);
+        Wrapped.WithImageUrl(url);
         return this;
     }
 
     public IDiscordEmbedBuilderWrapper WithImageUrl(Uri url)
     {
-        this.Wrapped.WithImageUrl(url);
+        Wrapped.WithImageUrl(url);
         return this;
     }
 
     public IDiscordEmbedBuilderWrapper WithThumbnail(string url, int height = 0, int width = 0)
     {
-        this.Wrapped.WithThumbnail(url, height, width);
+        Wrapped.WithThumbnail(url, height, width);
         return this;
     }
 
     public IDiscordEmbedBuilderWrapper WithThumbnail(Uri url, int height = 0, int width = 0)
     {
-        this.Wrapped.WithThumbnail(url, height, width);
+        Wrapped.WithThumbnail(url, height, width);
         return this;
     }
 
     public IDiscordEmbedBuilderWrapper WithAuthor(string? name = null, string? url = null, string? iconUrl = null)
     {
-        this.Wrapped.WithAuthor(name, url, iconUrl);
+        Wrapped.WithAuthor(name, url, iconUrl);
         return this;
     }
 
     public IDiscordEmbedBuilderWrapper WithFooter(string? text = null, string? iconUrl = null)
     {
-        this.Wrapped.WithFooter(text, iconUrl);
+        Wrapped.WithFooter(text, iconUrl);
         return this;
     }
 
     public IDiscordEmbedBuilderWrapper AddField(string name, string value, bool inline = false)
     {
-        this.Wrapped.AddField(name, value, inline);
+        Wrapped.AddField(name, value, inline);
         return this;
     }
 
     public IDiscordEmbedBuilderWrapper RemoveFieldAt(int index)
     {
-        this.Wrapped.RemoveFieldAt(index);
+        Wrapped.RemoveFieldAt(index);
         return this;
     }
 
     public IDiscordEmbedBuilderWrapper RemoveFieldRange(int index, int count)
     {
-        this.Wrapped.RemoveFieldRange(index, count);
+        Wrapped.RemoveFieldRange(index, count);
         return this;
     }
 
     public IDiscordEmbedBuilderWrapper ClearFields()
     {
-        this.Wrapped.ClearFields();
+        Wrapped.ClearFields();
         return this;
     }
 
     public IDiscordEmbedBuilderWrapper WithTitle(string title)
     {
-        this.Wrapped.WithTitle(title);
+        Wrapped.WithTitle(title);
         return this;
     }
 }

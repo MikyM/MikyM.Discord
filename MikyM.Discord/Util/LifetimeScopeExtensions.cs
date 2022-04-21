@@ -21,10 +21,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using Autofac;
-using MikyM.Discord.Events;
 using System.Collections.Generic;
 using System.Linq;
+using Autofac;
+using MikyM.Discord.Events;
 
 namespace MikyM.Discord.Util;
 

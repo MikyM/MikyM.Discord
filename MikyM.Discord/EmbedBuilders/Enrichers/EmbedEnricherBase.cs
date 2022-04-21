@@ -24,7 +24,7 @@ public abstract class EmbedEnricherBase<TPrimaryEnricher> : IEmbedEnricher
     protected TPrimaryEnricher PrimaryEnricher { get; }
 
     protected EmbedEnricherBase(TPrimaryEnricher primaryEnricher)
-        => this.PrimaryEnricher = primaryEnricher;
+        => PrimaryEnricher = primaryEnricher;
 
     public abstract void Enrich(IDiscordEmbedBuilderWrapper embedBuilder);
 }
@@ -35,7 +35,7 @@ public abstract class EmbedEnricherBase<TPrimaryEnricher, TSecondaryEnricher> : 
 
     protected EmbedEnricherBase(TPrimaryEnricher primaryEnricher, TSecondaryEnricher secondaryEnricher) :
         base(primaryEnricher) =>
-        this.SecondaryEnricher = secondaryEnricher;
+        SecondaryEnricher = secondaryEnricher;
 }
 
 public abstract class
@@ -46,7 +46,7 @@ public abstract class
 
     protected EmbedEnricherBase(TPrimaryEnricher primaryEnricher, TSecondaryEnricher secondaryEnricher, TTertiaryEnricher tertiaryEnricher) :
         base(primaryEnricher, secondaryEnricher) =>
-        this.TertiaryEnricher = tertiaryEnricher;
+        TertiaryEnricher = tertiaryEnricher;
 }
 
 public abstract class
@@ -57,5 +57,5 @@ public abstract class
 
     protected EmbedEnricherBase(TPrimaryEnricher primaryEnricher, TSecondaryEnricher secondaryEnricher, TTertiaryEnricher tertiaryEnricher, TQuaternaryEnricher quaternaryEnricher) :
         base(primaryEnricher, secondaryEnricher, tertiaryEnricher) =>
-        this.QuaternaryEnricher = quaternaryEnricher;
+        QuaternaryEnricher = quaternaryEnricher;
 }

@@ -20,6 +20,8 @@ using MikyM.Discord.EmbedBuilders.Enrichers;
 
 namespace MikyM.Discord.EmbedBuilders.Builders;
 
+/// <inheritdoc cref="EnhancedDiscordEmbedBuilder"/>
+/// <inheritdoc cref="IEnrichedDiscordEmbedBuilder"/>
 /// <summary>
 /// Constructs enriched embeds.
 /// </summary>
@@ -48,13 +50,19 @@ public class EnrichedDiscordEmbedBuilder : EnhancedDiscordEmbedBuilder, IEnriche
     /// <param name="builder">Builder to base this off of.</param>
     public EnrichedDiscordEmbedBuilder(DiscordEmbedBuilder builder) : base(builder){}
 
+    /// <inheritdoc />
     public virtual IEnrichedDiscordEmbedBuilder EnrichFrom<TEnricher>(TEnricher enricher)
         where TEnricher : IEmbedEnricher
     {
-        enricher.Enrich(this.Current);
+        enricher.Enrich(Current);
         return this;
     }
 
+   /// <summary>
+   /// 
+   /// </summary>
+   /// <param name="builder"></param>
+   /// <returns></returns>
    public static implicit operator DiscordEmbed(EnrichedDiscordEmbedBuilder builder)
         => builder.Build();
 }

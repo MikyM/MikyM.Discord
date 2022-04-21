@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using MikyM.Discord.EmbedBuilders.Builders;
+
 namespace MikyM.Discord.EmbedBuilders;
 
 internal static class BuilderCache

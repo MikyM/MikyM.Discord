@@ -15,46 +15,68 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
+using System.Reflection;
 using DSharpPlus.Entities;
 using MikyM.Discord.EmbedBuilders.Wrappers;
 using MikyM.Discord.Extensions.BaseExtensions;
-using System;
 
 namespace MikyM.Discord.EmbedBuilders.Builders;
 
+/// <inheritdoc />
 public class EnhancedDiscordEmbedBuilder : IEnhancedDiscordEmbedBuilder
 {
+    /// <inheritdoc />
     public DiscordEmbed? Base { get; private set; }
+    /// <inheritdoc />
     public DiscordEmbedBuilderWrapper Current { get; private set; }
+    /// <inheritdoc />
     public string? Action { get; private set; }
+    /// <inheritdoc />
     public string? ActionType { get; private set; }
+    /// <inheritdoc />
     public long? CaseId { get; private set; }
+    /// <inheritdoc />
     public DiscordUser? AuthorUser { get; private set; }
+    /// <inheritdoc />
     public SnowflakeObject? FooterSnowflake { get; private set; }
+    /// <inheritdoc />
     public string AuthorTemplate { get; private set; } = @"@action@@type@@info@"; // 0 - action , 1 - type, 2 - target/caller
+    /// <inheritdoc />
     public string TitleTemplate { get; private set; } = @"@action@@type@@info@"; // 0 - action , 1 - type, 2 - target/caller
+    /// <inheritdoc />
     public string FooterTemplate { get; private set; } = @"@caseId@@info@"; // 0 - caseId , 1 - snowflake info
+    /// <inheritdoc />
     public bool IsTemplatingEnabled { get; private set; } = true;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public EnhancedDiscordEmbedBuilder()
-        => this.Current = new DiscordEmbedBuilderWrapper();
+        => Current = new DiscordEmbedBuilderWrapper();
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <exception cref="ArgumentNullException"></exception>
     public EnhancedDiscordEmbedBuilder(DiscordEmbedBuilder builder)
     {
-        this.Base = new DiscordEmbedBuilder(builder ?? throw new ArgumentNullException(nameof(builder)));
-        this.Current = new DiscordEmbedBuilderWrapper(builder);
+        Base = new DiscordEmbedBuilder(builder ?? throw new ArgumentNullException(nameof(builder)));
+        Current = new DiscordEmbedBuilderWrapper(builder);
     }
 
+    /// <inheritdoc />
     public TBuilder AsEnriched<TBuilder>(params object[] args) where TBuilder : EnrichedDiscordEmbedBuilder
     {
-        if (typeof(TBuilder) == typeof(EnrichedDiscordEmbedBuilder)) return (TBuilder)this.AsEnriched();
+        if (typeof(TBuilder) == typeof(EnrichedDiscordEmbedBuilder)) return (TBuilder)AsEnriched();
 
         if (!BuilderCache.CachedTypes.TryGetValue(typeof(TBuilder).FullName ?? throw new InvalidOperationException("Builder type is not valid."),
                 out var type) || !typeof(TBuilder).IsAssignableFrom(type))
             throw new ArgumentException("Given builder type is not valid in this context.");
 
         var instance = Activator.CreateInstance(type,
-            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance, null, new object[] { args }, null);
+            BindingFlags.NonPublic | BindingFlags.Instance, null, new object[] { args }, null);
         if (instance is null)
             throw new InvalidOperationException("Failed to create an instance of the specified builder.");
 
@@ -64,118 +86,134 @@ public class EnhancedDiscordEmbedBuilder : IEnhancedDiscordEmbedBuilder
         return castInstance ?? throw new InvalidOperationException("Failed to prepare the created builder instance."); ;
     }
 
+    /// <inheritdoc />
     public IEnrichedDiscordEmbedBuilder AsEnriched()
         => new EnrichedDiscordEmbedBuilder(this);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
     public static implicit operator DiscordEmbed(EnhancedDiscordEmbedBuilder builder)
         => builder.Build();
 
+    /// <inheritdoc />
     public IEnhancedDiscordEmbedBuilder DisableTemplating(bool shouldDisableTemplating = true)
     {
-        this.IsTemplatingEnabled = !shouldDisableTemplating;
+        IsTemplatingEnabled = !shouldDisableTemplating;
         return this;
     }
 
 
+    /// <inheritdoc />
     public IEnhancedDiscordEmbedBuilder WithCase(long? caseId)
     {
-        this.CaseId = caseId;
+        CaseId = caseId;
         return this;
     }
 
+    /// <inheritdoc />
     public IEnhancedDiscordEmbedBuilder WithEmbedColor(DiscordColor color)
     {
-        this.Current.WithColor(color);
+        Current.WithColor(color);
         return this;
     }
 
     internal DiscordEmbedBuilder GetCurrentInternal()
-        => this.Current.GetBaseInternal();
+        => Current.GetBaseInternal();
 
     private void PrepareCustomEnriched(IEnhancedDiscordEmbedBuilder builderToBaseOffOf)
     {
-        this.Current = builderToBaseOffOf.Current;
-        this.Base = builderToBaseOffOf.Base;
+        Current = builderToBaseOffOf.Current;
+        Base = builderToBaseOffOf.Base;
     }
 
+    /// <inheritdoc />
     public DiscordEmbedBuilder? ExtractBase() 
-        => this.Base is null ? null : new DiscordEmbedBuilder(this.Current.GetBaseInternal());
-    
+        => Base is null ? null : new DiscordEmbedBuilder(Current.GetBaseInternal());
 
+
+    /// <inheritdoc />
     public IEnhancedDiscordEmbedBuilder WithAuthorSnowflakeInfo(DiscordUser? user)
     {
-        this.AuthorUser = user;
+        AuthorUser = user;
         return this;
     }
 
+    /// <inheritdoc />
     public IEnhancedDiscordEmbedBuilder SetAuthorTemplate(string template)
     {
         if (string.IsNullOrWhiteSpace(template)) throw new ArgumentException("Invalid template", nameof(template));
-        this.FooterTemplate = template;
+        FooterTemplate = template;
         return this;
     }
 
+    /// <inheritdoc />
     public IEnhancedDiscordEmbedBuilder SetFooterTemplate(string template)
     {
         if (string.IsNullOrWhiteSpace(template)) throw new ArgumentException("Invalid template", nameof(template));
-        this.AuthorTemplate = template;
+        AuthorTemplate = template;
         return this;
     }
 
+    /// <inheritdoc />
     public IEnhancedDiscordEmbedBuilder SetTitleTemplate(string template)
     {
         if (string.IsNullOrWhiteSpace(template)) throw new ArgumentException("Invalid template", nameof(template));
-        this.TitleTemplate = template;
+        TitleTemplate = template;
         return this;
     }
 
+    /// <inheritdoc />
     public IEnhancedDiscordEmbedBuilder WithFooterSnowflakeInfo(SnowflakeObject? snowflake)
     {
-        this.FooterSnowflake = snowflake;
+        FooterSnowflake = snowflake;
         return this;
     }
 
+    /// <inheritdoc />
     public IEnhancedDiscordEmbedBuilder WithAction<TEnum>(TEnum action) where TEnum : Enum
     {
-        this.Action = action.ToString();
+        Action = action.ToString();
         return this;
     }
 
     public IEnhancedDiscordEmbedBuilder WithActionType<TEnum>(TEnum actionType) where TEnum : Enum
     {
-        this.ActionType = actionType.ToString();
+        ActionType = actionType.ToString();
         return this;
     }
 
     protected virtual void Evaluate()
     {
-        if (!this.IsTemplatingEnabled) return;
+        if (!IsTemplatingEnabled) return;
 
-        string author = this.AuthorTemplate
-            .Replace("@action@", this.Action is null ? "" : this.Action.SplitByCapitalAndConcat())
+        string author = AuthorTemplate
+            .Replace("@action@", Action is null ? "" : Action.SplitByCapitalAndConcat())
             .Replace("@type@",
-                this.ActionType is null
+                ActionType is null
                     ? ""
-                    : $" {this.ActionType.SplitByCapitalAndConcat()}");
+                    : $" {ActionType.SplitByCapitalAndConcat()}");
 
         author = author.Replace("@info@",
-            this.AuthorUser is null ? "" : $" | {this.AuthorUser.GetFullUsername()}");
+            AuthorUser is null ? "" : $" | {AuthorUser.GetFullUsername()}");
 
-        this.Current.WithAuthor(author, null, this.AuthorUser?.AvatarUrl);
+        Current.WithAuthor(author, null, AuthorUser?.AvatarUrl);
 
-        if (this.FooterSnowflake is null && !this.CaseId.HasValue) return;
-        string footer = this.FooterTemplate.Replace("@caseId@", this.CaseId is null ? "" : $"Case Id: {this.CaseId}")
+        if (FooterSnowflake is null && !CaseId.HasValue) return;
+        string footer = FooterTemplate.Replace("@caseId@", CaseId is null ? "" : $"Case Id: {CaseId}")
             .Replace("@info@",
-                this.FooterSnowflake is null
+                FooterSnowflake is null
                     ? ""
-                    : $"{(this.CaseId.HasValue ? " | " : "")}{this.FooterSnowflake.GetType().Name.SplitByCapitalAndConcat()} Id: {this.FooterSnowflake.Id}");
+                    : $"{(CaseId.HasValue ? " | " : "")}{FooterSnowflake.GetType().Name.SplitByCapitalAndConcat()} Id: {FooterSnowflake.Id}");
 
-        this.Current.WithFooter(footer);
+        Current.WithFooter(footer);
     }
 
     public DiscordEmbed Build()
     {
-        this.Evaluate();
-        return this.Current.Build();
+        Evaluate();
+        return Current.Build();
     }
 }

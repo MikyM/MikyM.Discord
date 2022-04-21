@@ -15,8 +15,8 @@
 // You should have received a copy of the GNU Affero General License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-using DSharpPlus.Entities;
 using System;
+using DSharpPlus.Entities;
 
 namespace MikyM.Discord.EmbedBuilders.Wrappers;
 

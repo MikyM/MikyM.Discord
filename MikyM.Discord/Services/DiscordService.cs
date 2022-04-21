@@ -21,22 +21,21 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using DSharpPlus;
-using JetBrains.Annotations;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using MikyM.Common.Utilities;
-using MikyM.Discord.Interfaces;
-using MikyM.Discord.Util;
-using OpenTracing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Autofac;
+using DSharpPlus;
+using JetBrains.Annotations;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using MikyM.Common.Utilities;
 using MikyM.Discord.Events;
+using MikyM.Discord.Interfaces;
+using MikyM.Discord.Util;
+using OpenTracing;
 
 namespace MikyM.Discord.Services;
 
