@@ -93,7 +93,7 @@ public static class DiscordServiceCollectionExtensions
                     .BuildSpan(nameof(ext.CommandErrored))
                     .IgnoreActiveSpan()
                     .StartActive(true);
-                workScope.Span.SetTag("Command.Name", args.Command.Name);
+                workScope.Span.SetTag("Command.Name", args.Command?.Name ?? "unknown");
 
                 using var scope = provider.CreateScope();
 
