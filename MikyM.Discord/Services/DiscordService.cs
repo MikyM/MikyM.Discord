@@ -50,7 +50,7 @@ public class DiscordService : IDiscordService
     private readonly ILogger<DiscordService> _logger;
     private readonly ILifetimeScope _rootScope;
     private readonly ITracer _tracer;
-    private readonly IAsyncExecutor _asyncExecutor;
+    private readonly IBackgroundExecutor _asyncExecutor;
 
     private readonly IEnumerable<Type> _miscSubscribers;
     private readonly IEnumerable<Type> _voiceSubscribers;
@@ -66,7 +66,7 @@ public class DiscordService : IDiscordService
     private readonly IEnumerable<Type> _websocketSubscribers;
 
     public DiscordService(ILoggerFactory logFactory, ILogger<DiscordService> logger,
-        ITracer tracer, IOptions<DiscordConfiguration> discordOptions, IAsyncExecutor asyncExecutor, ILifetimeScope rootScope)
+        ITracer tracer, IOptions<DiscordConfiguration> discordOptions, IBackgroundExecutor asyncExecutor, ILifetimeScope rootScope)
     {
         _logger = logger;
         _tracer = tracer;
