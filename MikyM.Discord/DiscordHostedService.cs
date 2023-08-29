@@ -65,10 +65,10 @@ public class DiscordHostedService : IHostedService
             await _discordClient.Client.ConnectAsync();
             _logger.LogInformation("Connected");
 
-            if (WaitForDownloadCompletionHelper.ShouldWait)
+            if (WaitForDownloadCompletionHandler.Instance.ShouldWait)
             {
                 _logger.LogInformation("Waiting for discord's guild download completion.");
-                await WaitForDownloadCompletionHelper.ReadyToOperateEvent.WaitAsync();
+                await WaitForDownloadCompletionHandler.Instance.ReadyToOperateEvent.WaitAsync();
                 _logger.LogInformation("Discord fully operational.");
             }
         }

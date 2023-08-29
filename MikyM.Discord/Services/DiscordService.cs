@@ -217,7 +217,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_websocketSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordWebSocketEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnSocketErrored(sender, args);
@@ -239,7 +239,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_websocketSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordWebSocketEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnSocketOpened(sender, args);
@@ -261,7 +261,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_websocketSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordWebSocketEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnSocketClosed(sender, args);
@@ -280,7 +280,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_websocketSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordWebSocketEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnReady(sender, args);
@@ -299,7 +299,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_websocketSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordWebSocketEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnResumed(sender, args);
@@ -318,7 +318,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_websocketSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordWebSocketEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnHeartbeated(sender, args);
@@ -337,7 +337,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_websocketSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordWebSocketEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnZombied(sender, args);
@@ -364,7 +364,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_channelSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordChannelEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnChannelCreated(sender, args);
@@ -388,7 +388,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_channelSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordChannelEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnChannelUpdated(sender, args);
@@ -411,7 +411,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_channelSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordChannelEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnChannelDeleted(sender, args);
@@ -433,7 +433,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_channelSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordChannelEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnDmChannelDeleted(sender, args);
@@ -456,7 +456,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_channelSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordChannelEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnChannelPinsUpdated(sender, args);
@@ -483,7 +483,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_guildSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordGuildEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnGuildCreated(sender, args);
@@ -505,7 +505,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_guildSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordGuildEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnGuildAvailable(sender, args);
@@ -529,7 +529,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_guildSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordGuildEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnGuildUpdated(sender, args);
@@ -552,7 +552,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_guildSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordGuildEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnGuildDeleted(sender, args);
@@ -574,7 +574,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_guildSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordGuildEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnGuildUnavailable(sender, args);
@@ -595,7 +595,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_guildSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordGuildEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnGuildDownloadCompleted(sender, args);
@@ -617,7 +617,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_guildSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordGuildEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnGuildEmojisUpdated(sender, args);
@@ -639,7 +639,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_guildSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordGuildEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnGuildStickersUpdated(sender, args);
@@ -661,7 +661,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_guildSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordGuildEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnGuildIntegrationsUpdated(sender, args);
@@ -689,7 +689,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_banSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordGuildBanEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnGuildBanAdded(sender, args);
@@ -712,7 +712,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_banSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordGuildBanEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnGuildBanRemoved(sender, args);
@@ -739,7 +739,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_memberSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordGuildMemberEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnGuildMemberAdded(sender, args);
@@ -762,7 +762,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_memberSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordGuildMemberEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnGuildMemberRemoved(sender, args);
@@ -785,7 +785,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_memberSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordGuildMemberEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnGuildMemberUpdated(sender, args);
@@ -807,7 +807,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_memberSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordGuildMemberEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnGuildMembersChunked(sender, args);
@@ -834,7 +834,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_roleSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordGuildRoleEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnGuildRoleCreated(sender, args);
@@ -858,7 +858,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_roleSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordGuildRoleEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnGuildRoleUpdated(sender, args);
@@ -881,7 +881,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_roleSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordGuildRoleEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnGuildRoleDeleted(sender, args);
@@ -910,7 +910,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_inviteSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordInviteEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnInviteCreated(sender, args);
@@ -935,7 +935,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_inviteSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordInviteEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnInviteDeleted(sender, args);
@@ -964,7 +964,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_messageSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordMessageEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnMessageCreated(sender, args);
@@ -987,7 +987,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_messageSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordMessageEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnMessageAcknowledged(sender, args);
@@ -1012,7 +1012,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_messageSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordMessageEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnMessageUpdated(sender, args);
@@ -1036,7 +1036,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_messageSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordMessageEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnMessageDeleted(sender, args);
@@ -1059,7 +1059,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_messageSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordMessageEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnMessagesBulkDeleted(sender, args);
@@ -1088,7 +1088,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_reactionSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordMessageReactionEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnMessageReactionAdded(sender, args);
@@ -1113,7 +1113,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_reactionSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordMessageReactionEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnMessageReactionRemoved(sender, args);
@@ -1137,7 +1137,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_reactionSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordMessageReactionEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnMessageReactionsCleared(sender, args);
@@ -1162,7 +1162,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_reactionSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordMessageReactionEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnMessageReactionRemovedEmoji(sender, args);
@@ -1188,7 +1188,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_presenceSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordPresenceUserEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnPresenceUpdated(sender, args);
@@ -1210,7 +1210,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_presenceSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordPresenceUserEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnUserSettingsUpdated(sender, args);
@@ -1231,7 +1231,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_presenceSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordPresenceUserEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnUserUpdated(sender, args);
@@ -1259,7 +1259,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_voiceSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordVoiceEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnVoiceStateUpdated(sender, args);
@@ -1281,7 +1281,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_voiceSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordVoiceEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnVoiceServerUpdated(sender, args);
@@ -1309,7 +1309,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_miscSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordMiscEventsSubscriber) scope.Resolve(sub);
                         await handler.DiscordOnComponentInteractionCreated(sender, args);
@@ -1332,7 +1332,7 @@ public class DiscordService : IDiscordService
             {
                 await Parallel.ForEachAsync(_miscSubscribers, async (sub, _) =>
                 {
-                    using var scope = _rootScope.BeginLifetimeScope();
+                    await using var scope = _rootScope.BeginLifetimeScope();
                     {
                         var handler = (IDiscordMiscEventsSubscriber)scope.Resolve(sub);
                         await handler.DiscordOnClientErrored(sender, args);

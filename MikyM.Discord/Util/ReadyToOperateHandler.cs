@@ -51,8 +51,8 @@ public class ReadyToOperateHandler : IDiscordGuildEventsSubscriber
 
     public async Task DiscordOnGuildDownloadCompleted(DiscordClient sender, GuildDownloadCompletedEventArgs args)
     {
-        if (!WaitForDownloadCompletionHelper.ReadyToOperateEvent.IsSet)
-            await WaitForDownloadCompletionHelper.ReadyToOperateEvent.SetAsync();
+        if (!WaitForDownloadCompletionHandler.Instance.ReadyToOperateEvent.IsSet)
+            await WaitForDownloadCompletionHandler.Instance.ReadyToOperateEvent.SetAsync();
     }
 
     public Task DiscordOnGuildEmojisUpdated(DiscordClient sender, GuildEmojisUpdateEventArgs args)

@@ -111,7 +111,7 @@ public static partial class DiscordServiceCollectionExtensions
         bool shouldWaitForGuildDownloadCompletion = false
     )
     {
-        WaitForDownloadCompletionHelper.ShouldWait = shouldWaitForGuildDownloadCompletion;
+        WaitForDownloadCompletionHandler.Instance.ShouldWait = shouldWaitForGuildDownloadCompletion;
         if (shouldWaitForGuildDownloadCompletion) services.AddDiscordGuildEventsSubscriber<ReadyToOperateHandler>();
         return services.AddHostedService<DiscordHostedService>();
     }

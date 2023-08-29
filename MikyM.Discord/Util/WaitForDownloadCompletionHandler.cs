@@ -15,12 +15,16 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-using Emzi0767.Utilities;
-
 namespace MikyM.Discord.Util;
 
-public static class WaitForDownloadCompletionHelper
+internal class WaitForDownloadCompletionHandler
 {
-    public static bool ShouldWait { get; set; }
-    public static readonly AsyncManualResetEvent ReadyToOperateEvent = new (false);
+    public static WaitForDownloadCompletionHandler Instance { get; } = new ();
+    
+    private WaitForDownloadCompletionHandler()
+    {
+    }
+    
+    public bool ShouldWait { get; set; }
+    public readonly AsyncManualResetEvent ReadyToOperateEvent = new (false);
 }
