@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFrameworks>net7.0;net8.0</TargetFrameworks>
 		<Nullable>enable</Nullable>
 		<PackageId>MikyM.Discord</PackageId>
-		<Version>1.1.1</Version>
+		<Version>1.2.0</Version>
 		<Authors>Krzysztof Kupisz</Authors>
 		<PackageDescription>Helps hosting a Discord bot written with DSharpPlus library in a .NET 6 project with dependancy injection, toned for usage with Autofac.</PackageDescription>
 		<RepositoryUrl>https://github.com/MikyM/MikyM.Discord</RepositoryUrl>
@@ -12,17 +12,36 @@
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	</PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="DSharpPlus" Version="4.4.2" />
-		<PackageReference Include="DSharpPlus.CommandsNext" Version="4.4.2" />
-		<PackageReference Include="DSharpPlus.Interactivity" Version="4.4.2" />
-		<PackageReference Include="DSharpPlus.SlashCommands" Version="4.4.2" />
-		<PackageReference Include="DSharpPlus.VoiceNext" Version="4.4.2" />
-		<PackageReference Include="JetBrains.Annotations" Version="2023.2.0" />
+	<ItemGroup Condition="('$(TargetFramework)' == 'net7.0')">
+		<PackageReference Include="DSharpPlus" Version="4.4.3" />
+		<PackageReference Include="DSharpPlus.CommandsNext" Version="4.4.3" />
+		<PackageReference Include="DSharpPlus.Interactivity" Version="4.4.3" />
+		<PackageReference Include="DSharpPlus.SlashCommands" Version="4.4.3" />
+		<PackageReference Include="DSharpPlus.VoiceNext" Version="4.4.3" />
+		<PackageReference Include="JetBrains.Annotations" Version="2023.3.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
 		<PackageReference Include="MikyM.Common.Utilities" Version="1.1.0" />
 		<PackageReference Include="OpenTracing" Version="0.12.1" />
 	</ItemGroup>
+	<PropertyGroup Condition="('$(TargetFramework)' == 'net7.0')">
+		<DefineConstants>NET7_0</DefineConstants>
+	</PropertyGroup>
+	
+	<ItemGroup Condition="('$(TargetFramework)' == 'net8.0')">
+		<PackageReference Include="DSharpPlus" Version="4.4.3" />
+		<PackageReference Include="DSharpPlus.CommandsNext" Version="4.4.3" />
+		<PackageReference Include="DSharpPlus.Interactivity" Version="4.4.3" />
+		<PackageReference Include="DSharpPlus.SlashCommands" Version="4.4.3" />
+		<PackageReference Include="DSharpPlus.VoiceNext" Version="4.4.3" />
+		<PackageReference Include="JetBrains.Annotations" Version="2023.3.0" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+		<PackageReference Include="MikyM.Common.Utilities" Version="1.1.0" />
+		<PackageReference Include="OpenTracing" Version="0.12.1" />
+	</ItemGroup>
+	<PropertyGroup Condition="('$(TargetFramework)' == 'net8.0')">
+		<DefineConstants>NET8_0</DefineConstants>
+	</PropertyGroup>
+	
 
 	<ItemGroup>
 		<Folder Include="Attributes\" />
