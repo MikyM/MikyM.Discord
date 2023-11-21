@@ -18,7 +18,9 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         source-url: https://nuget.pkg.github.com/MikyM/index.json
-        dotnet-version: 7.0.x
+        dotnet-version: |
+          7.0.x
+          8.0.x
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
     - name: Check out Code 
