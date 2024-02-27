@@ -172,6 +172,7 @@ public class DiscordService : IDiscordService
         // Merge/enrich intents the user requested with those the subscribers require
         //
 
+#if NET7_0
         if (channelEventsSubscriber.Any()) intents |= DiscordIntents.Guilds;
         if (guildEventSubscribers.Any()) intents |= DiscordIntents.Guilds | DiscordIntents.GuildEmojis;
         if (guildBanEventsSubscriber.Any()) intents |= DiscordIntents.GuildBans;
@@ -182,6 +183,19 @@ public class DiscordService : IDiscordService
         if (messageReactionAddedEventsSubscriber.Any()) intents |= DiscordIntents.GuildMessageReactions;
         if (presenceUserEventsSubscriber.Any()) intents |= DiscordIntents.GuildPresences;
         if (voiceEventsSubscriber.Any()) intents |= DiscordIntents.GuildVoiceStates;
+#else
+        if (channelEventsSubscriber.Any()) intents |= DiscordIntents.Guilds;
+        if (guildEventSubscribers.Any()) intents |= DiscordIntents.Guilds | DiscordIntents.GuildEmojisAndStickers;
+        if (guildBanEventsSubscriber.Any()) intents |= DiscordIntents.GuildModeration;
+        if (guildMemberEventsSubscriber.Any()) intents |= DiscordIntents.GuildMembers;
+        if (guildRoleEventsSubscriber.Any()) intents |= DiscordIntents.Guilds;
+        if (inviteEventsSubscriber.Any()) intents |= DiscordIntents.GuildInvites;
+        if (messageEventsSubscriber.Any()) intents |= DiscordIntents.GuildMessages;
+        if (messageReactionAddedEventsSubscriber.Any()) intents |= DiscordIntents.GuildMessageReactions;
+        if (presenceUserEventsSubscriber.Any()) intents |= DiscordIntents.GuildPresences;
+        if (voiceEventsSubscriber.Any()) intents |= DiscordIntents.GuildVoiceStates;
+#endif
+
 
         #endregion
 
@@ -272,7 +286,8 @@ public class DiscordService : IDiscordService
             return Task.CompletedTask;
         };
 
-        Client.Ready += (sender, args) =>
+#if NET7_0
+           Client.Ready += (sender, args) =>
         {
             using var workScope = _tracer.BuildSpan(nameof(Client.Ready)).IgnoreActiveSpan().StartActive(true);
 
@@ -308,7 +323,67 @@ public class DiscordService : IDiscordService
             });
 
             return Task.CompletedTask;
+        };     
+#else
+        Client.GuildDownloadCompleted += (sender, args) =>
+        {
+            using var workScope = _tracer.BuildSpan(nameof(Client.GuildDownloadCompleted)).IgnoreActiveSpan().StartActive(true);
+
+            _asyncExecutor.ExecuteAsync(async () =>
+            {
+                await Parallel.ForEachAsync(_websocketSubscribers, async (sub, _) =>
+                {
+                    await using var scope = _rootScope.BeginLifetimeScope();
+                    {
+                        var handler = (IDiscordWebSocketEventsSubscriber)scope.Resolve(sub);
+                        await handler.DiscordOnGuildDownloadCompleted(sender, args);
+                    }
+                });
+            });
+
+            return Task.CompletedTask;
         };
+        
+        Client.SessionCreated += (sender, args) =>
+        {
+            using var workScope = _tracer.BuildSpan(nameof(Client.SessionCreated)).IgnoreActiveSpan().StartActive(true);
+
+            _asyncExecutor.ExecuteAsync(async () =>
+            {
+                await Parallel.ForEachAsync(_websocketSubscribers, async (sub, _) =>
+                {
+                    await using var scope = _rootScope.BeginLifetimeScope();
+                    {
+                        var handler = (IDiscordWebSocketEventsSubscriber)scope.Resolve(sub);
+                        await handler.DiscordOnReady(sender, args);
+                    }
+                });
+            });
+
+            return Task.CompletedTask;
+        };
+
+        Client.SessionResumed += (sender, args) =>
+        {
+            using var workScope = _tracer.BuildSpan(nameof(Client.SessionResumed)).IgnoreActiveSpan().StartActive(true);
+
+            _asyncExecutor.ExecuteAsync(async () =>
+            {
+                await Parallel.ForEachAsync(_websocketSubscribers, async (sub, _) =>
+                {
+                    await using var scope = _rootScope.BeginLifetimeScope();
+                    {
+                        var handler = (IDiscordWebSocketEventsSubscriber)scope.Resolve(sub);
+                        await handler.DiscordOnResumed(sender, args);
+                    }
+                });
+            });
+
+            return Task.CompletedTask;
+        };
+#endif
+        
+
 
         Client.Heartbeated += (sender, args) =>
         {
@@ -974,8 +1049,8 @@ public class DiscordService : IDiscordService
 
             return Task.CompletedTask;
         };
-
-        Client.MessageAcknowledged += (sender, args) =>
+#if NET7_0
+           Client.MessageAcknowledged += (sender, args) =>
         {
             using var workScope = _tracer.BuildSpan(nameof(Client.MessageAcknowledged))
                 .IgnoreActiveSpan()
@@ -996,7 +1071,9 @@ public class DiscordService : IDiscordService
             });
 
             return Task.CompletedTask;
-        };
+        };     
+#endif
+
 
         Client.MessageUpdated += (sender, args) =>
         {

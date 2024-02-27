@@ -44,6 +44,7 @@ public interface IDiscordWebSocketEventsSubscriber
     /// </summary>
     public Task DiscordOnSocketClosed(DiscordClient sender, SocketCloseEventArgs args);
 
+#if NET7_0
     /// <summary>
     ///     Fired when the client enters ready state.
     /// </summary>
@@ -53,6 +54,22 @@ public interface IDiscordWebSocketEventsSubscriber
     ///     Fired whenever a session is resumed.
     /// </summary>
     public Task DiscordOnResumed(DiscordClient sender, ReadyEventArgs args);
+#else
+    /// <summary>
+    ///     Fired when the client enters ready state.
+    /// </summary>
+    public Task DiscordOnReady(DiscordClient sender, SessionReadyEventArgs args);
+    
+    /// <summary>
+    ///     Fired whenever a session is resumed.
+    /// </summary>
+    public Task DiscordOnResumed(DiscordClient sender, SessionReadyEventArgs args);
+#endif
+
+    /// <summary>
+    ///     Fired on guild download completion.
+    /// </summary>
+    public Task DiscordOnGuildDownloadCompleted(DiscordClient sender, GuildDownloadCompletedEventArgs args);
 
     /// <summary>
     ///     Fired on received heartbeat ACK.

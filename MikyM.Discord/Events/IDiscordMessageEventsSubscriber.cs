@@ -36,12 +36,15 @@ public interface IDiscordMessageEventsSubscriber
     /// </summary>
     public Task DiscordOnMessageCreated(DiscordClient sender, MessageCreateEventArgs args);
 
-    /// <summary>
+#if NET7_0
+       /// <summary>
     ///     Fired when message is acknowledged by the user.
     ///     For this Event you need the <see cref="DiscordIntents.GuildMessages" /> intent specified in
     ///     <seealso cref="DiscordConfiguration.Intents" />
     /// </summary>
-    public Task DiscordOnMessageAcknowledged(DiscordClient sender, MessageAcknowledgeEventArgs args);
+    public Task DiscordOnMessageAcknowledged(DiscordClient sender, MessageAcknowledgeEventArgs args); 
+#endif
+
 
     /// <summary>
     ///     Fired when a message is updated.
