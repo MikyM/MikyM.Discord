@@ -95,44 +95,6 @@ public static class ServiceCollectionExtensions
     /// </summary>
     /// <param name="services">The <see cref="IServiceCollection" />.</param>
     /// <param name="assembliesToScan">Assemblies to scan for subscribers.</param>
-    /// <param name="token">The bot token.</param>
-    /// <param name="intents">The intents.</param>
-    /// <param name="dispatchConfigure">The dispatch configure.</param>
-    /// <returns>The <see cref="IServiceCollection" />.</returns>
-    [UsedImplicitly]
-    public static IServiceCollection AddExtendedDiscord(
-        this IServiceCollection services,
-        string token,
-        DiscordIntents intents,
-        IEnumerable<Assembly> assembliesToScan,
-        Action<DiscordEventDispatchConfiguration> dispatchConfigure
-    )
-        => AddExtendedDiscordPrivate(services, token, intents, assembliesToScan, null, dispatchConfigure);
-    
-    /// <summary>
-    ///     Registers the Discord related services.
-    /// </summary>
-    /// <param name="services">The <see cref="IServiceCollection" />.</param>
-    /// <param name="assembliesToScan">Assemblies to scan for subscribers.</param>
-    /// <param name="token">The bot token.</param>
-    /// <param name="intents">The intents.</param>
-    /// <param name="configure">The <see cref="DiscordConfiguration" />.</param>
-    /// <returns>The <see cref="IServiceCollection" />.</returns>
-    [UsedImplicitly]
-    public static IServiceCollection AddExtendedDiscord(
-        this IServiceCollection services,
-        string token,
-        DiscordIntents intents,
-        IEnumerable<Assembly> assembliesToScan,
-        Action<DiscordConfiguration> configure
-    )
-        => AddExtendedDiscordPrivate(services, token, intents, assembliesToScan, configure , null);
-    
-    /// <summary>
-    ///     Registers the Discord related services.
-    /// </summary>
-    /// <param name="services">The <see cref="IServiceCollection" />.</param>
-    /// <param name="assembliesToScan">Assemblies to scan for subscribers.</param>
     /// <param name="configure">The <see cref="DiscordConfiguration" />.</param>
     /// <param name="token">The bot token.</param>
     /// <param name="intents">The intents.</param>
@@ -144,8 +106,9 @@ public static class ServiceCollectionExtensions
         string token,
         DiscordIntents intents,
         IEnumerable<Assembly> assembliesToScan,
-        Action<DiscordConfiguration> configure,
-        Action<DiscordEventDispatchConfiguration> dispatchConfigure
+        Action<DiscordEventDispatchConfiguration> dispatchConfigure,
+        Action<DiscordConfiguration>? configure = null
+
     )
         => AddExtendedDiscordPrivate(services, token, intents, assembliesToScan, configure, dispatchConfigure);
     

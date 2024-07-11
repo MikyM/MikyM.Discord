@@ -29,7 +29,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddDiscordCommands(
         this IServiceCollection services,
         IEnumerable<Assembly> assembliesToScan,
-        Action<CommandsConfiguration>? configuration = null,
+        Action<CommandsConfiguration> configuration,
         Action<CommandsExtension>? extension = null
     )
     {
@@ -41,7 +41,9 @@ public static class ServiceCollectionExtensions
         
         var options = new CommandsConfiguration();
 
-        configuration?.Invoke(options);
+        configuration.Invoke(options);
+
+        services.Configure(configuration);
         
         foreach (var (_, metas) in subscriberTypes)
         {

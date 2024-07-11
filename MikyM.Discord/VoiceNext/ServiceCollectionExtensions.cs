@@ -16,19 +16,21 @@ public static class ServiceCollectionExtensions
     ///     Adds VoiceNext extension to <see cref="DiscordClient" />.
     /// </summary>
     /// <param name="services">The <see cref="IServiceCollection" />.</param>
-    /// <param name="configure">The <see cref="VoiceNextConfiguration" />.</param>
+    /// <param name="configuration">The <see cref="VoiceNextConfiguration" />.</param>
     /// <param name="extension">The extension action.</param>
     /// <returns>The <see cref="IServiceCollection" />.</returns>
     [UsedImplicitly]
     public static IServiceCollection AddDiscordVoiceNext(
         this IServiceCollection services,
-        Action<VoiceNextConfiguration>? configure = null,
+        Action<VoiceNextConfiguration> configuration,
         Action<VoiceNextExtension>? extension = null
     )
     {
         var options = new VoiceNextConfiguration();
 
-        configure?.Invoke(options);
+        configuration.Invoke(options);
+        
+        services.Configure(configuration);
         
         services.AddExtensionConfigurator<VoiceNextExtension>(Configure);
 

@@ -31,6 +31,8 @@ public static class ServiceCollectionExtensions
 
         configuration(options);
         
+        services.Configure(configuration);
+        
         services.AddExtensionConfigurator<InteractivityExtension>(Configure);
 
         return services;
