@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -17,17 +18,17 @@ namespace MikyM.Discord;
 /// </summary>
 public class MetadataProvider
 {
-    private readonly Dictionary<Type,DiscordEventMetadata> _eventData = new();
-    private readonly Dictionary<Type,DiscordEventMetadata> _basicEventData = new();
-    private readonly Dictionary<Type,DiscordEventMetadata> _commandEventData = new();
+    private readonly ConcurrentDictionary<Type,DiscordEventMetadata> _eventData = new();
+    private readonly ConcurrentDictionary<Type,DiscordEventMetadata> _basicEventData = new();
+    private readonly ConcurrentDictionary<Type,DiscordEventMetadata> _commandEventData = new();
     
-    internal Dictionary<Type,DiscordEventMetadata> GetEventData() => _eventData;
-    internal Dictionary<Type,DiscordEventMetadata> GetBasicEventData() => _basicEventData;
-    internal Dictionary<Type,DiscordEventMetadata> GetCommandEventData() => _commandEventData;
+    internal ConcurrentDictionary<Type,DiscordEventMetadata> GetEventData() => _eventData;
+    internal ConcurrentDictionary<Type,DiscordEventMetadata> GetBasicEventData() => _basicEventData;
+    internal ConcurrentDictionary<Type,DiscordEventMetadata> GetCommandEventData() => _commandEventData;
     
-    private readonly Dictionary<SubscriberDelegateKey, SubscriberDelegate> _delegateCache = new();
+    private readonly ConcurrentDictionary<SubscriberDelegateKey, SubscriberDelegate> _delegateCache = new();
     
-    internal Dictionary<SubscriberDelegateKey, SubscriberDelegate> GetSubscriberDelegates() => _delegateCache;
+    internal ConcurrentDictionary<SubscriberDelegateKey, SubscriberDelegate> GetSubscriberDelegates() => _delegateCache;
     
     internal SubscriberDelegate GetSubscriberDelegate(Type subscriberType, Type eventType)
     {

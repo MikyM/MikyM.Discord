@@ -65,14 +65,14 @@ public static class ServiceCollectionExtensions
 
             ext.CommandErrored += (sender, args) =>
             {
-                _ = executor.DispatchSequentialOrderedPipeAsync(typeof(CommandErroredEventArgs), sender, args);
+                _ = executor.DispatchAsync(typeof(CommandErroredEventArgs), sender, args);
 
                 return Task.CompletedTask;
             };
 
             ext.CommandExecuted += (sender, args) =>
             {
-                _ = executor.DispatchSequentialOrderedPipeAsync(typeof(CommandExecutedEventArgs), sender, args);
+                _ = executor.DispatchAsync(typeof(CommandExecutedEventArgs), sender, args);
 
                 return Task.CompletedTask;
             };

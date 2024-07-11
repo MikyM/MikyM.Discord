@@ -38,7 +38,7 @@ public static class ServiceCollectionExtensions
     /// <param name="services">The service collection.</param>
     /// <param name="implementation">Implementation type.</param>
     /// <returns>The service collection.</returns>
-    public static IServiceCollection AddDiscordEventSubscriber(this IServiceCollection services, Type implementation)
+    internal static IServiceCollection AddDiscordEventSubscriber(this IServiceCollection services, Type implementation)
         => AddDiscordEventSubscriber(services, SubscriberMetadata.Create(implementation));
     
     /// <summary>
@@ -46,7 +46,7 @@ public static class ServiceCollectionExtensions
     /// </summary>
     /// <param name="services">The service collection.</param>
     /// <returns>The service collection.</returns>
-    public static IServiceCollection AddDiscordEventSubscriber<TSubscriber>(this IServiceCollection services)
+    internal static IServiceCollection AddDiscordEventSubscriber<TSubscriber>(this IServiceCollection services)
         => AddDiscordEventSubscriber(services, SubscriberMetadata.Create(typeof(TSubscriber)));
 
     /// <summary>
@@ -56,7 +56,7 @@ public static class ServiceCollectionExtensions
     /// <param name="serviceType">The service type.</param>
     /// <param name="implementation">Implementation type.</param>
     /// <returns>The service collection.</returns>
-    public static IServiceCollection AddDiscordEventSubscriber(this IServiceCollection services, Type serviceType, Type implementation)
+    internal static IServiceCollection AddDiscordEventSubscriber(this IServiceCollection services, Type serviceType, Type implementation)
         => AddDiscordEventSubscriber(services, SubscriberMetadata.Create(serviceType, implementation));
     
     /// <summary>
@@ -64,7 +64,7 @@ public static class ServiceCollectionExtensions
     /// </summary>
     /// <param name="services">The service collection.</param>
     /// <returns>The service collection.</returns>
-    public static IServiceCollection AddDiscordEventSubscriber<TSubscriberService,TSubscriberImplementation>(this IServiceCollection services)
+    internal static IServiceCollection AddDiscordEventSubscriber<TSubscriberService,TSubscriberImplementation>(this IServiceCollection services)
         => AddDiscordEventSubscriber(services, SubscriberMetadata.Create(typeof(TSubscriberImplementation),typeof(TSubscriberService)));
     
     internal static IServiceCollection AddDiscordEventSubscriber(this IServiceCollection services, SubscriberMetadata metadata, SubscriberType? subscriberType = null)
@@ -95,9 +95,9 @@ public static class ServiceCollectionExtensions
     /// </summary>
     /// <param name="services">The <see cref="IServiceCollection" />.</param>
     /// <param name="assembliesToScan">Assemblies to scan for subscribers.</param>
-    /// <param name="configure">The <see cref="DiscordConfiguration" />.</param>
     /// <param name="token">The bot token.</param>
     /// <param name="intents">The intents.</param>
+    /// <param name="dispatchConfigure">The dispatch configure.</param>
     /// <returns>The <see cref="IServiceCollection" />.</returns>
     [UsedImplicitly]
     public static IServiceCollection AddExtendedDiscord(
@@ -105,14 +105,73 @@ public static class ServiceCollectionExtensions
         string token,
         DiscordIntents intents,
         IEnumerable<Assembly> assembliesToScan,
-        Action<DiscordConfiguration>? configure = null
+        Action<DiscordEventDispatchConfiguration> dispatchConfigure
+    )
+        => AddExtendedDiscordPrivate(services, token, intents, assembliesToScan, null, dispatchConfigure);
+    
+    /// <summary>
+    ///     Registers the Discord related services.
+    /// </summary>
+    /// <param name="services">The <see cref="IServiceCollection" />.</param>
+    /// <param name="assembliesToScan">Assemblies to scan for subscribers.</param>
+    /// <param name="token">The bot token.</param>
+    /// <param name="intents">The intents.</param>
+    /// <param name="configure">The <see cref="DiscordConfiguration" />.</param>
+    /// <returns>The <see cref="IServiceCollection" />.</returns>
+    [UsedImplicitly]
+    public static IServiceCollection AddExtendedDiscord(
+        this IServiceCollection services,
+        string token,
+        DiscordIntents intents,
+        IEnumerable<Assembly> assembliesToScan,
+        Action<DiscordConfiguration> configure
+    )
+        => AddExtendedDiscordPrivate(services, token, intents, assembliesToScan, configure , null);
+    
+    /// <summary>
+    ///     Registers the Discord related services.
+    /// </summary>
+    /// <param name="services">The <see cref="IServiceCollection" />.</param>
+    /// <param name="assembliesToScan">Assemblies to scan for subscribers.</param>
+    /// <param name="configure">The <see cref="DiscordConfiguration" />.</param>
+    /// <param name="token">The bot token.</param>
+    /// <param name="intents">The intents.</param>
+    /// <param name="dispatchConfigure">The dispatch configure.</param>
+    /// <returns>The <see cref="IServiceCollection" />.</returns>
+    [UsedImplicitly]
+    public static IServiceCollection AddExtendedDiscord(
+        this IServiceCollection services,
+        string token,
+        DiscordIntents intents,
+        IEnumerable<Assembly> assembliesToScan,
+        Action<DiscordConfiguration> configure,
+        Action<DiscordEventDispatchConfiguration> dispatchConfigure
+    )
+        => AddExtendedDiscordPrivate(services, token, intents, assembliesToScan, configure, dispatchConfigure);
+        
+    private static IServiceCollection AddExtendedDiscordPrivate(
+        this IServiceCollection services,
+        string token,
+        DiscordIntents intents,
+        IEnumerable<Assembly> assembliesToScan,
+        Action<DiscordConfiguration>? configure,
+        Action<DiscordEventDispatchConfiguration>? dispatchConfigure
     )
     {
         services.AddOptions();
 
-        if (configure is not null)
+        if (configure != null)
         {
             services.Configure(configure);
+        }
+        
+        if (dispatchConfigure != null)
+        {
+            services.Configure(dispatchConfigure);
+        }
+        else
+        {
+            services.Configure<DiscordEventDispatchConfiguration>(_ => { });
         }
         
         // add events
@@ -122,7 +181,8 @@ public static class ServiceCollectionExtensions
         metadataProvider.AppendTypes(assembliesToScan.SelectMany(x => x.GetTypes()));
 
         services.AddSingleton<DiscordEventDispatcher>(x =>
-            new DiscordEventDispatcher(x, x.GetRequiredService<ILogger<DiscordEventDispatcher>>(), metadataProvider));
+            new DiscordEventDispatcher(x, x.GetRequiredService<ILogger<DiscordEventDispatcher>>(), metadataProvider,
+                x.GetRequiredService<IOptions<DiscordEventDispatchConfiguration>>()));
 
         services.AddHostedService(x => x.GetRequiredService<DiscordEventDispatcher>());
 
@@ -145,7 +205,7 @@ public static class ServiceCollectionExtensions
 
                 AsyncEventHandler<DiscordClient, DiscordEventArgs> handler = (client, args) =>
                 {
-                    _ = executor.DispatchParallelPipeAsync(eventType, client, args);
+                    _ = executor.DispatchAsync(eventType, client, args);
 
                     return Task.CompletedTask;
                 };

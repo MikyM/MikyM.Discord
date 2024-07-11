@@ -5,6 +5,7 @@ using DSharpPlus.EventArgs;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Moq;
 using BindingFlags = System.Reflection.BindingFlags;
 
@@ -14,6 +15,8 @@ public class DiscordEventDispatcherTestsFixture
 {
     public Mock<IServiceProvider> ServiceProvider { get; } = new();
     public Mock<ILogger<DiscordEventDispatcher>> Logger { get; } = new();
+    
+    public IOptions<DiscordEventDispatchConfiguration> DispatchOptions { get; } = Options.Create(new DiscordEventDispatchConfiguration());
 }
 
 [CollectionDefinition("DiscordEventDispatcherTests")]
@@ -37,7 +40,7 @@ public class DiscordEventDispatcherTests : ICollectionFixture<DiscordEventDispat
             
 
             var func = () => new DiscordEventDispatcher(_fixture.ServiceProvider.Object, _fixture.Logger.Object,
-                provider);
+                provider, _fixture.DispatchOptions);
             
             func.Should().NotThrow().Subject.Should().NotBeNull();
         }
@@ -79,7 +82,7 @@ public class DiscordEventDispatcherTests : ICollectionFixture<DiscordEventDispat
             
                 var meta = MetadataProvider.Create();
                 meta.AppendTypes(new []{ type });
-                var subject = new DiscordEventDispatcher(serviceProvider, _fixture.Logger.Object, meta);
+                var subject = new DiscordEventDispatcher(serviceProvider, _fixture.Logger.Object, meta, _fixture.DispatchOptions);
 
                 var builder = DiscordClientBuilder.CreateDefault("", DiscordIntents.AllUnprivileged, services);
 
@@ -131,7 +134,7 @@ public class DiscordEventDispatcherTests : ICollectionFixture<DiscordEventDispat
                 var meta = MetadataProvider.Create();
                 meta.AppendTypes(new []{ type });
             
-                var subject = new DiscordEventDispatcher(serviceProvider, _fixture.Logger.Object, meta);
+                var subject = new DiscordEventDispatcher(serviceProvider, _fixture.Logger.Object, meta, _fixture.DispatchOptions);
 
                 var builder = DiscordClientBuilder.CreateDefault("", DiscordIntents.AllUnprivileged, services);
 
@@ -177,7 +180,7 @@ public class DiscordEventDispatcherTests : ICollectionFixture<DiscordEventDispat
             var meta = MetadataProvider.Create();
             meta.AppendTypes(new []{ typeof(CommandExecutedEventArgsSubscriberNone) });
             
-            var subject = new DiscordEventDispatcher(serviceProvider, _fixture.Logger.Object, meta);
+            var subject = new DiscordEventDispatcher(serviceProvider, _fixture.Logger.Object, meta, _fixture.DispatchOptions);
 
             var builder = DiscordClientBuilder.CreateDefault("", DiscordIntents.AllUnprivileged, services);
 
@@ -192,7 +195,7 @@ public class DiscordEventDispatcherTests : ICollectionFixture<DiscordEventDispat
             };
             
             // Act && Assert
-            var func = async () => await subject.DispatchSequentialOrderedPipeAsync(typeof(CommandExecutedEventArgs), ext, args);
+            var func = async () => await subject.DispatchAsync(typeof(CommandExecutedEventArgs), ext, args);
             
             await func.Should().NotThrowAsync();
         }
@@ -222,7 +225,7 @@ public class DiscordEventDispatcherTests : ICollectionFixture<DiscordEventDispat
             var meta = MetadataProvider.Create();
             meta.AppendTypes(new []{ typeof(SessionCreatedEventArgsSubscriberNone) });
             
-            var subject = new DiscordEventDispatcher(serviceProvider, _fixture.Logger.Object, meta);
+            var subject = new DiscordEventDispatcher(serviceProvider, _fixture.Logger.Object, meta, _fixture.DispatchOptions);
 
             var builder = DiscordClientBuilder.CreateDefault("", DiscordIntents.AllUnprivileged, services);
 
@@ -234,7 +237,7 @@ public class DiscordEventDispatcherTests : ICollectionFixture<DiscordEventDispat
             var args = (SessionCreatedEventArgs)ctor?.Invoke([])!;
             
             // Act && Assert
-            var func = async () => await subject.DispatchParallelPipeAsync(typeof(SessionCreatedEventArgs), client, args);
+            var func = async () => await subject.DispatchAsync(typeof(SessionCreatedEventArgs), client, args);
             
             await func.Should().NotThrowAsync();
         }

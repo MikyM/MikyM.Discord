@@ -4,7 +4,7 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<PackageId>MikyM.Discord</PackageId>
-		<Version>2.0.0</Version>
+		<Version>2.0.1</Version>
 		<Authors>Krzysztof Kupisz</Authors>
 		<PackageDescription>Helps hosting a Discord bot written with DSharpPlus library in a .NET 6 project with dependancy injection, toned for usage with Autofac.</PackageDescription>
 		<RepositoryUrl>https://github.com/MikyM/MikyM.Discord</RepositoryUrl>
