@@ -1,26 +1,13 @@
-﻿// This file is part of Lisbeth.Bot project
-//
-// Copyright (C) 2021 Krzysztof Kupisz - MikyM
-// 
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU Affero General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-// 
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU Affero General Public License for more details.
-// 
-// You should have received a copy of the GNU Affero General Public License
-// along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-using System;
+﻿using System;
 using DSharpPlus.Entities;
 using MikyM.Discord.EmbedBuilders.Wrappers;
 
 namespace MikyM.Discord.EmbedBuilders.Builders;
 
+/// <summary>
+/// Represents an enhanced version of <see cref="DiscordEmbedBuilder"/> with additional features.
+/// </summary>
+[PublicAPI]
 public interface IEnhancedDiscordEmbedBuilder : IBaseEmbedBuilder
 {
     /// <summary> Gets base result built from the passed <see cref="DiscordEmbedBuilder"/>, if any.</summary>
@@ -69,7 +56,7 @@ public interface IEnhancedDiscordEmbedBuilder : IBaseEmbedBuilder
     /// <returns>The current builder instance.</returns>
     IEnhancedDiscordEmbedBuilder WithFooterSnowflakeInfo(SnowflakeObject? snowflake);
     /// <summary> Sets the <see cref="DiscordUser"/> to be used in the author template. </summary>
-    /// <param name="member">Target, cause or caller of the action.</param>
+    /// <param name="user">Target, cause or caller of the action.</param>
     /// <returns>The current builder instance.</returns>
     IEnhancedDiscordEmbedBuilder WithAuthorSnowflakeInfo(DiscordUser? user);
     /// <summary> Sets the author template. </summary>

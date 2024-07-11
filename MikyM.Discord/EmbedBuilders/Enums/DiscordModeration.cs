@@ -1,33 +1,49 @@
-﻿// This file is part of Lisbeth.Bot project
-//
-// Copyright (C) 2021 Krzysztof Kupisz - MikyM
-// 
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU Affero General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-// 
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU Affero General Public License for more details.
-// 
-// You should have received a copy of the GNU Affero General Public License
-// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+﻿namespace MikyM.Discord.EmbedBuilders.Enums;
 
-
-namespace MikyM.Discord.EmbedBuilders.Enums;
-
+/// <summary>
+/// Discord moderation actions.
+/// </summary>
+[PublicAPI]
 public enum DiscordModeration
 {
+    /// <summary>
+    /// Undefined.
+    /// </summary>
     Undefined,
+    /// <summary>
+    /// Ban.
+    /// </summary>
     Ban,
+    /// <summary>
+    /// Unban.
+    /// </summary>
     Unban,
+    /// <summary>
+    /// Ban get.
+    /// </summary>
     BanGet,
+    /// <summary>
+    /// Mute.
+    /// </summary>
     Mute,
+    /// <summary>
+    /// Unmute.
+    /// </summary>
     Unmute,
+    /// <summary>
+    /// Mute get.
+    /// </summary>
     MuteGet,
+    /// <summary>
+    /// Prune.
+    /// </summary>
     Prune,
+    /// <summary>
+    /// Prune get.
+    /// </summary>
     PruneGet,
+    /// <summary>
+    /// Id.
+    /// </summary>
     Id
 }

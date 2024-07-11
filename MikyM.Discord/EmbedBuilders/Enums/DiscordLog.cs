@@ -22,12 +22,36 @@ namespace MikyM.Discord.EmbedBuilders.Enums;
 /// </summary>
 public enum DiscordLog
 {
+    /// <summary>
+    /// Unknown.
+    /// </summary>
     Unknown,
+    /// <summary>
+    /// Member added.
+    /// </summary>
     MemberAdded,
+    /// <summary>
+    /// Member removed.
+    /// </summary>
     MemberRemoved,
+    /// <summary>
+    /// Member updated.
+    /// </summary>
     MemberUpdated,
+    /// <summary>
+    /// Message added.
+    /// </summary>
     MessageAdded,
+    /// <summary>
+    /// Message deleted.
+    /// </summary>
     MessageDeleted,
+    /// <summary>
+    /// Message updated.
+    /// </summary>
     MessageUpdated,
+    /// <summary>
+    /// Moderation.
+    /// </summary>
     Moderation
 }

@@ -24,7 +24,16 @@ namespace MikyM.Discord.EmbedBuilders.Enums;
 /// </summary>
 public enum DiscordBotAction
 {
+    /// <summary>
+    /// Undefined action.
+    /// </summary>
     Undefined,
+    /// <summary>
+    /// Response action.
+    /// </summary>
     Response,
+    /// <summary>
+    /// Log action.
+    /// </summary>
     Log
 }
