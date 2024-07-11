@@ -148,6 +148,23 @@ public static class ServiceCollectionExtensions
         Action<DiscordEventDispatchConfiguration> dispatchConfigure
     )
         => AddExtendedDiscordPrivate(services, token, intents, assembliesToScan, configure, dispatchConfigure);
+    
+    /// <summary>
+    ///     Registers the Discord related services.
+    /// </summary>
+    /// <param name="services">The <see cref="IServiceCollection" />.</param>
+    /// <param name="assembliesToScan">Assemblies to scan for subscribers.</param>
+    /// <param name="token">The bot token.</param>
+    /// <param name="intents">The intents.</param>
+    /// <returns>The <see cref="IServiceCollection" />.</returns>
+    [UsedImplicitly]
+    public static IServiceCollection AddExtendedDiscord(
+        this IServiceCollection services,
+        string token,
+        DiscordIntents intents,
+        IEnumerable<Assembly> assembliesToScan
+    )
+        => AddExtendedDiscordPrivate(services, token, intents, assembliesToScan, null, null);
         
     private static IServiceCollection AddExtendedDiscordPrivate(
         this IServiceCollection services,
